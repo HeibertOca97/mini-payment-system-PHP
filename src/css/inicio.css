@@ -1,0 +1,67 @@
+#componenteInicio>div:nth-of-type(1),
+#componenteInicio>div:nth-of-type(2) {
+ background-color: rgba(105, 105, 105, 0.192);
+}
+
+#componenteInicio>div:nth-of-type(1) {
+ margin: 10px 0;
+}
+
+#componenteInicio>div>h1 {
+ color: rgb(201, 199, 199);
+ padding-left: 10px;
+ line-height: 3em;
+}
+
+#componenteInicio>.contenedor_datos {
+ display: flex;
+ flex-wrap: wrap;
+ justify-content: space-around;
+ align-items: center;
+ padding: 40px 0;
+}
+
+#componenteInicio>.contenedor_datos>div {
+ color: #fff;
+ width: 35%;
+ max-width: 300px;
+ min-width: 200px;
+ margin: 5px;
+ border-radius: 8px;
+}
+
+#componenteInicio>.contenedor_datos>div:nth-of-type(1) {
+ background-color: rgb(0, 140, 255);
+}
+
+#componenteInicio>.contenedor_datos>div:nth-of-type(2) {
+ background-color: rgb(0, 79, 143);
+}
+
+#componenteInicio>.contenedor_datos>div:nth-of-type(3) {
+ background-color: rgb(6, 12, 102);
+}
+
+#componenteInicio>.contenedor_datos>div>h3 {
+ text-align: left;
+ padding: 10px;
+ box-sizing: border-box;
+ font-size: 24px;
+ overflow: hidden;
+}
+
+#componenteInicio>.contenedor_datos>div>p {
+ margin: 15px 15px 15px 0px;
+ text-align: right;
+ font-size: 18px;
+}
+
+/******************** MEDIAS QUERYS *********************/
+@media screen and (min-width:500px) {
+ #componenteInicio>.contenedor_datos>div>h3 {
+  text-align: left;
+  padding: 0px;
+  margin: 20px 0px 25px 25px;
+  font-size: 24px;
+ }
+}

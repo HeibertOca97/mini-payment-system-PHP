@@ -1,0 +1,139 @@
+*,
+html,
+body {
+ margin: 0;
+ padding: 0;
+}
+
+body {
+ background-color: #18191A;
+}
+
+/************
+HEADER
+***********/
+header {
+ background-color: rgb(19, 18, 18);
+ font-size: 24px;
+ position: fixed;
+ top: 0;
+ left: 0;
+ width: 100%;
+ z-index: 50;
+}
+
+header>div {
+ max-width: 1200px;
+ margin: auto;
+ display: flex;
+ flex-wrap: wrap;
+ justify-content: space-around;
+ align-items: center;
+ height: 65px;
+}
+
+header>div>strong {
+ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+ color: #fff;
+ text-transform: uppercase;
+}
+
+header>div>strong:nth-of-type(1) {
+ border: 2px solid rgba(255, 255, 255, 0.801);
+ border-radius: 5px;
+ padding: 3px;
+ box-sizing: border-box;
+ cursor: pointer;
+}
+
+header>div>strong:nth-of-type(2) {
+ font-size: 20px;
+}
+
+/************
+SECTION
+***********/
+#root {
+ position: fixed;
+ top: 65px;
+ left: 0;
+ z-index: 50;
+ width: 100%;
+ height: 100%;
+ overflow: auto;
+ background-color: rgba(255, 255, 255, 0);
+}
+
+section>#box_content {
+ margin: 0 auto 150px auto;
+ max-width: 1200px;
+}
+
+/************
+NAV - MENU
+***********/
+nav.box_menu {
+ height: 100vh;
+ background-color: rgb(15, 15, 15);
+ position: fixed;
+ top: 65px;
+ left: 0;
+ z-index: 60;
+ display: none;
+}
+
+#box_fondo {
+ position: fixed;
+ top: 65px;
+ left: 0;
+ z-index: 55;
+ width: 100%;
+ height: 100vh;
+ display: none;
+}
+
+.box_menu>#box_link>strong {
+ display: block;
+ color: #fff;
+ box-shadow: 0px 0px 2px rgba(255, 255, 255, 0.26);
+ font-size: 24px;
+ line-height: 2.2em;
+ padding: 0px 15px;
+ box-sizing: border-box;
+ position: relative;
+ cursor: pointer;
+}
+
+.box_menu>#box_link>strong>p {
+ position: absolute;
+ top: 0px;
+ left: 100%;
+ background-color: rgba(0, 0, 0, 0.801);
+ font-size: 16px;
+ height: 100%;
+ padding: 0 15px;
+ box-sizing: border-box;
+}
+
+/*******************
+FOOTER
+******************/
+footer {
+ text-align: center;
+ color: #fff;
+ background-image: linear-gradient(rgba(19, 18, 18, 0.699), rgb(19, 18, 18));
+}
+
+footer>p {
+ padding: 10px 3px;
+ box-sizing: border-box;
+}
+
+/******************
+ESTILO DEL CONTENEDOR GENERAL DEL CONTENEDOR
+******************/
+.principalContenedor {
+ max-width: 1000px;
+ margin: auto;
+ /* border: 1px solid #fff; */
+}

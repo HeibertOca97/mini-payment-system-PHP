@@ -1,0 +1,129 @@
+*,
+html,
+body {
+ padding: 0;
+ margin: 0;
+}
+
+img {
+ position: absolute;
+ top: 0px;
+ left: 0px;
+ width: 100%;
+ height: 100vh;
+ object-fit: cover;
+}
+
+section {
+ position: fixed;
+ height: 100%;
+ width: 100%;
+ top: 0px;
+ left: 0px;
+ display: flex;
+ flex-wrap: wrap;
+ justify-content: center;
+ align-items: center;
+}
+
+article {
+ display: block;
+ box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.425),
+  -3px -3px 5px rgba(255, 255, 255, 0.267);
+ max-width: 350px;
+ width: 100%;
+ background-color: rgba(175, 68, 18, 0.465);
+ border-radius: 10px;
+ animation: animar 800ms forwards linear;
+}
+
+@keyframes animar {
+ 0% {
+  opacity: 0;
+  margin-top: -450px;
+ }
+
+ 100% {
+  margin-top: 0px;
+  opacity: 1;
+ }
+}
+
+article>h1 {
+ text-align: center;
+ margin: 50px auto;
+ font-family: 'Lobster',
+  cursive;
+ color: rgb(58, 28, 10);
+ font-size: 25px;
+}
+
+article>div {
+ margin: 10px 0;
+ position: relative;
+}
+
+article>div>input,
+article>div>span {
+ display: block;
+}
+
+article>div>input {
+ width: 95%;
+ margin: auto;
+ padding: 10px 5px;
+ box-sizing: border-box;
+ text-align: center;
+ border: 2px solid transparent;
+ background-color: rgba(255, 255, 255, 0.425);
+ outline: none;
+}
+
+article>div>input:active,
+article>div>input:focus {
+ background-color: rgba(255, 255, 255, 0.849);
+ outline: none;
+}
+
+article>div>button {
+ display: block;
+ width: 95%;
+ padding: 10px 0;
+ text-transform: uppercase;
+ margin: 15px auto 35px auto;
+ background-color: rgb(182, 58, 0);
+ color: #fff;
+ font-weight: bold;
+ border: 1px solid transparent;
+ cursor: pointer;
+ border-radius: 5px;
+ transition: all 250ms linear;
+ font-family: 'Ranchers',
+  cursive;
+ letter-spacing: 5px;
+}
+
+article>div>button:hover {
+ background-color: rgb(255, 81, 0);
+}
+
+/******************************
+ESTILO MSG AVISO
+******************************/
+.msg_aviso {
+ padding: 10px 5px;
+ box-sizing: border-box;
+ background-color: rgb(144, 0, 5);
+ color: rgb(255, 255, 255);
+ margin-top: 5px;
+ text-align: center;
+ display: none;
+}
+
+#msg_incorrecto>p {
+ background-color: rgba(107, 0, 0, 0.479);
+ color: red;
+ line-height: 2.8em;
+ text-align: center;
+ font-weight: bold;
+}

@@ -1,0 +1,13 @@
+{
+ "name": "usuario/sistema-pago",
+ "description": "Este es un peque\u0000o sistema de control de pagos.....",
+ "type": "project",
+ "license": "propietary",
+ "authors": [ {
+  "name": "Heibert Ocaña",
+  "email": "heibertvts1997@gmail.com"
+ } ],
+ "require": {
+  "spipu/html2pdf": "5.2.*"
+ }
+}
