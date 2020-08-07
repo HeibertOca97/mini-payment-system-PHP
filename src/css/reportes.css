@@ -1,0 +1,66 @@
+#componenteReportes #tb_rol {
+ border-collapse: collapse;
+ margin: auto;
+ display: block;
+ line-height: 2.8em;
+ max-width: 800px;
+}
+
+/*****************ENCABEZADO DATOS DEL EMPLEADO********************/
+#componenteReportes>.boxdatosEmpleados {
+ line-height: 2.8em;
+ margin: auto;
+ max-width: 800px;
+}
+
+#componenteReportes>.boxdatosEmpleados>div {
+ display: flex;
+}
+
+#componenteReportes>.boxdatosEmpleados>div>p {
+ margin: 0 15px 0 0;
+}
+
+/*****************TABLA DE ROL********************/
+#tb_rol>tbody>tr:nth-of-type(4) {
+ border-top: 1px solid #000;
+ border-bottom: 1px solid #000;
+}
+
+#tb_rol>thead>tr>th:nth-of-type(1) {
+ width: 50%;
+ max-width: 400px;
+}
+
+#tb_rol>thead>tr>th:nth-of-type(2) {
+ width: 100%;
+ max-width: 400px;
+}
+
+#tb_rol>tbody>tr>td>span {
+ margin: 0 10px 0 5px;
+}
+
+#tb_rol>tbody>tr>td>strong {
+ margin: 0 5px 0 10px;
+}
+
+#tb_rol>tbody>tr:nth-last-of-type(1)>td,
+#tb_rol>tbody>tr:nth-last-of-type(2)>td {
+ text-align: center;
+ margin: 25px auto;
+ position: relative;
+}
+
+#tb_rol>tbody>tr:nth-last-of-type(1)>td::after {
+ content: '';
+ display: block;
+ width: 100%;
+ max-width: 150px;
+ height: 1px;
+ background-color: #000;
+ position: absolute;
+ top: 60%;
+ left: 52%;
+ right: 50%;
+}

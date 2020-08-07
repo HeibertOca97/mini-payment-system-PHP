@@ -38,6 +38,7 @@
    if(isset($vistaArchivo)){
     require_once "view/".$vistaArchivo."View.php";
     echo '<a href="index.php?controller=Sesiones&action=Logout">Salir del sitio</a>';
+    echo '<a href="index.php?controller=Vistas&action=Reportes">Ver Reporte</a>';
    }
   ?>
    <footer>
