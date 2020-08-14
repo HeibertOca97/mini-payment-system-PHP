@@ -12,8 +12,7 @@ body {
 /************
 HEADER
 ***********/
-header {
- background-color: rgb(19, 18, 18);
+#header {
  font-size: 24px;
  position: fixed;
  top: 0;
@@ -22,7 +21,7 @@ header {
  z-index: 50;
 }
 
-header>div {
+#header>div {
  max-width: 1200px;
  margin: auto;
  display: flex;
@@ -32,13 +31,13 @@ header>div {
  height: 65px;
 }
 
-header>div>strong {
+#header>div>strong {
  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
  color: #fff;
  text-transform: uppercase;
 }
 
-header>div>strong:nth-of-type(1) {
+#header>div>strong:nth-of-type(1) {
  border: 2px solid rgba(255, 255, 255, 0.801);
  border-radius: 5px;
  padding: 3px;
@@ -46,7 +45,7 @@ header>div>strong:nth-of-type(1) {
  cursor: pointer;
 }
 
-header>div>strong:nth-of-type(2) {
+#header>div>strong:nth-of-type(2) {
  font-size: 20px;
 }
 
@@ -118,13 +117,13 @@ nav.box_menu {
 /*******************
 FOOTER
 ******************/
-footer {
+#footer {
  text-align: center;
  color: #fff;
  background-image: linear-gradient(rgba(19, 18, 18, 0.699), rgb(19, 18, 18));
 }
 
-footer>p {
+#footer>p {
  padding: 10px 3px;
  box-sizing: border-box;
 }
@@ -135,5 +134,12 @@ ESTILO DEL CONTENEDOR GENERAL DEL CONTENEDOR
 .principalContenedor {
  max-width: 1000px;
  margin: auto;
- /* border: 1px solid #fff; */
+}
+
+.fondoElementos {
+ background-color: rgba(105, 105, 105, 0.192);
+}
+
+.headerBlack {
+ background-color: rgb(19, 18, 18);
 }

@@ -1,6 +1,8 @@
 <?php
 class VistasController extends ControladorBase{
- 
+ public function __construct(){
+  parent::__construct();
+ }
  public function Reportes(){  
   require "vendor/autoload.php";
   $ruta = 'view/reporteView.php';

@@ -1,19 +1,32 @@
 $( document ).ready( () => {
-  //listarDatos();
+  buscarDatos();
   //requestAnimationFrame( getDatosEmpleados );
+  //FUNCION 1
+  //FUNCION ENCARGADA DE REDIRECCIONAR LA VISTA
+  regresarAtraz();
+  //FUNCION 2
+  //FUNCION ENCARGADA DE OBTENER LOS DATOS DE LA DB
   getDatosEmpleados();
+  //FUNCION 3
+  //FUNCION ENCARGADA DE REMOVER LOS ESTILOS DEL FORMULARIO
   removerEstilosError();
+  //FUNCION 4
+  //FUNCION ENCARGADA DE ENVIAR LOS DATOS AL SERVIDOR
   accionarRegistroEmpleados();
-  eliminarDato();
   //FUNCIONALIDADES
   accionarToggleForm();
   modals();
 } );
 
-var getNumberData = () => {
-  $.get( "controller/EmpleadosController.php?listar", data => {
-    const numberData = JSON.parse( data ).length;
-    $( '#box-barra-opciones div:first' ).html( `<p>Total de registros ${numberData}</p>` );
+//FUNCION 1
+var regresarAtraz = ()=>{
+ const url = ()=> render("inicio");
+ $(".btnInicio").click(url);
+}
+var getNumberData = (info='') => {
+ $.get( "index.php?controller=Empleados&action=listar", data => {
+  const numberData = JSON.parse( data ).length;
+    $( '#info_datos' ).html( `<p>Total: registros ${numberData} ${info}</p>` );
   } );
 }
 
@@ -81,6 +94,7 @@ var accionarEstilosEventoError = () => {
   for ( let i = 0; i < inputs.length; i++ ) {
     if ( !inputs[ i ].value ) {
       span[ i ].innerHTML = "Campo " + inputs[ i ].getAttribute( "id" ) + " requerido";
+      span[ i ].classList.add("msg_span");
       inputs[ i ].style.border = "2px solid red";
     }
   }
@@ -94,6 +108,7 @@ var removerEstilosError = () => {
   for ( let j = 0; j < inputs.length; j++ ) {
     inputs[ j ].addEventListener( "focus", () => {
       inputs[ j ].style.border = "2px solid #ccc";
+      span[ j ].classList.remove("msg_span");
       span[ j ].innerHTML = "";
     } );
   }
@@ -112,23 +127,26 @@ var accionarLimpiarInputs = () => {
 
 var registrarEmpleado = formulario => {
   $.ajax( {
-    url: "controller/EmpleadosController.php",
+    url: "index.php?controller=Empleados&action=crear",
     type: "post",
     data: formulario.serialize(),
     success: res => {
       //ACTUALIZA LOS REGISTROS
-      //getDatosEmpleados();
-    }
-  } );
+      getDatosEmpleados();
+      console.log("Registrado")
+     }
+ } );
 }
+//FUNCION 2
 //FUNCION DE IMPRIMIR LOS DATOS
 //FUNCION UTILIZADA PARA ACTUALIZAR LOS REGISTROS
 var getDatosEmpleados = () => {
-  console.log( 'Se ejecuto' );
-  $.get( "controller/EmpleadosController.php?listar", data => {
+  $.get( "index.php?controller=Empleados&action=consultar", data => {
+   let tr=``;
     const res = JSON.parse( data );
-    res.map( datos => {
+    res.filter( datos => {
       const {
+       id,
         cedula,
         nombres,
         apellidos,
@@ -137,14 +155,7 @@ var getDatosEmpleados = () => {
         sueldo,
         fecha
       } = datos;
-      imprimirData( cedula, nombres, apellidos, edad, cargo, sueldo, fecha );
-    } );
-    getNumberData();
-  } );
-}
-var imprimirData = ( cedula, nombres, apellidos, edad, cargo, sueldo, fecha ) => {
-  let tr = ``;
-  tr += `
+      tr += `
     <tr>
         <td>${cedula}</td>
         <td>${nombres} ${apellidos}</td>
@@ -152,89 +163,106 @@ var imprimirData = ( cedula, nombres, apellidos, edad, cargo, sueldo, fecha ) =>
         <td>${edad}</td>
         <td>${sueldo}</td>
         <td>${fecha}</td>
+        <td><button idEmp="${id}" class="icon-trash-empty btnDelete"></button><button class="icon-edit"></button></td>
     </tr>
   `;
-  $( '#datos_empleados' ).append( tr );
-}
-
-var listarDatos = () => {
-  $.get( "controller/EmpleadosController.php?listar", res => {
-    const datos = JSON.parse( res );
-    let tr = ``;
-
-    if ( datos !== null ) {
-      datos.forEach( dato => {
-        tr += `
-        <tr>
-          <td>${dato.cedula}</td>
-          <td>${dato.nombres}</td>
-          <td>${dato.apellidos}</td>
-          <td>${dato.sexo}</td>
-          <td>${dato.edad}</td>
-          <td>${dato.cargo}</td>
-          <td>${dato.sueldo}</td>
-          <td>${dato.fecha}</td>
-        </tr>
-        `;
-      } );
-      $( "#datos_empleados" ).html( tr );
-    }
+ } );
+ $( '#datos_empleados' ).html( tr );
+    getNumberData();
+    eliminarDato();
   } );
 }
-
 /**************
  * DELETE
  * *************/
 var eliminarDato = () => {
-  $( '.btnDelete' ).click( e => {
+ for (let i = 0; i < $( '.btnDelete' ).length; i++) {
+  $( '.btnDelete' ).eq(i).click( e => {
     const el = e.target;
-    const valor = el.getAttribute( 'idEl' );
-    //console.log( valor );
-    const res = confirm( "Desea elminar permanentemente el dato seleccionado" ) ? valor : false;
+    const valor = el.getAttribute( 'idEmp' );
+    const verificar = confirm( "Desea elminar permanentemente el dato seleccionado" ) ? valor : false;
     const fila = el.parentElement.parentElement;
-    if ( res ) {
-      fila.parentElement.removeChild( fila );
+    if ( verificar != false) {
+     $.post("index.php?controller=Empleados&action=eliminar",{id:valor});
+     fila.parentElement.removeChild( fila );
       getNumberData();
     }
   } );
+ }
 }
 /****************
  * BUSCADOR
  * ***************/
+var buscarDatos = () => {
+ const datosABuscar = ()=>{
+  if($("#txtBuscar").val() && $("#txtBuscar").length > 0 && $("#txtDato").val()){
+   const inputBuscador = {
+    columna:$("#txtDato").val(),
+    dato:$("#txtBuscar").val()
+   }
+   $.post( "index.php?controller=Empleados&action=consultar",inputBuscador, res => {
+    const datos = JSON.parse(res);
+    if(res != "false"){
+     let tr=``;
+     datos.filter(data => {
+      const {
+        id,
+         cedula,
+         nombres,
+         apellidos,
+         edad,
+         cargo,
+         sueldo,
+         fecha
+       } = data;
+      tr += `
+       <tr>
+        <td>${cedula}</td>
+        <td>${nombres} ${apellidos}</td>
+        <td>${cargo}</td>
+        <td>${edad}</td>
+        <td>${sueldo}</td>
+        <td>${fecha}</td>
+        <td><button idEmp="${id}" class="icon-trash-empty btnDelete"></button><button class="icon-edit"></button></td>
+       </tr>
+     `;  
+    });
+    $( '#datos_empleados' ).html( tr );
+    getNumberData(`| encontrados ${datos.length}`);
+     eliminarDato();
+    }else{
+     let tr = `<tr><td colspan="7" style="text-align:center;color:#fff;line-height:3em;">El dato ingresado no existe</td></tr>`;
+     $( '#datos_empleados' ).html(tr);
+     getNumberData();
+    }
+   });
+  }else{
+   getDatosEmpleados();
+  }
+}
+ $("#txtBuscar").keyup(datosABuscar);
+ 
+}
 /****************
  * FUNCIONALIDADES DE LA INTERFAZ
  * ***************/
 var accionarToggleForm = () => {
   const formularioEvent = () => {
-    const estilo = $( '#btnNuevo' ).css( 'background-color' ) == 'rgba(0, 0, 0, 0)' ? [ 'rgba(0,0,0,.7)', 'rgba(255,255,255,.8)', true ] : [ 'rgba(0, 0, 0, 0)', 'rgb(46, 46, 46)', false ];
+   //VALIDACION DE ESTILO DEL BOTON
+   const estilo = $( '#btnNuevo' ).css( 'background-color' ) == 'rgb(20, 71, 189)' ? [ 'rgb(255, 255, 255)', 'rgb(20, 71, 189)', true ] : [ 'rgb(20, 71, 189)', 'rgb(255, 255, 255)', false ];
+   //AÑADIENDO ESTILO AL BOTON
     $( '#btnNuevo' ).css( {
       'background-color': estilo[ 0 ],
       'color': estilo[ 1 ]
     } );
+    //VALIDACION DE FUNCIONALIDAD DEL BOTON
     estilo[ 2 ] == true ? $( '#fr_empleado' ).slideDown( '300' ) : $( '#fr_empleado' ).slideUp( '300' );
   }
 
   $( '#btnNuevo' ).click( formularioEvent );
-  //$( '#btnNuevo' ).click( modals() );
 }
 
 var toggleMensaje = ( el, msg ) => {
   const icono = `<span class="${el}"></span> ${msg} <strong id="deshacer">Deshacer</strong>`;
   return icono;
-}
-/********MODALS********/
-var modals = () => {
-  $( '#modals' ).fadeOut( '300' );
-  /*
-  $( '#btnNuevo' ).click( () => {
-    $( '#modals' ).fadeIn( '300' );
-  } );
-  $( '#modals' ).click( () => {
-    $( '#modals' ).fadeOut( '300' );
-  } );
-  $( window ).keyup( ( e ) => {
-    console.log( e.which + ' ' + e.key )
-    e.which === 27 || e.key === "Escape" ? $( '#modals' ).fadeOut( '300' ) : false;
-  } )
-  */
 }

@@ -21,8 +21,8 @@ $( document ).ready( () => {
     }
 
     $( "#btnMenu" ).css( estilo );
-  } ); //FUNCION QUE MUESTA EL ENUNCIADO DE CADA MENU
-
+  } ); 
+  //FUNCION QUE MUESTA EL ENUNCIADO DE CADA MENU
   for ( let i = 0; i < $( ".link" ).length; i++ ) {
     $( ".link" ).eq( i ).on( {
       mouseenter: e => {
@@ -30,7 +30,28 @@ $( document ).ready( () => {
       },
       mouseleave: e => {
         $( ".link" ).eq( i ).html( "" );
+      },
+      click:()=>{
+       render($( ".link" ).eq( i ).attr("name"));
       }
-    } );
+    } ); 
   }
+
+
 } );
+
+function render(vista){
+ switch (vista) {
+  case "inicio":
+   location.href = "index.php?controller=Sesiones&action=index";
+   break;
+   case "registro":
+    location.href = "index.php?controller=Empleados&action=ver";
+    break;
+    case "pagos":
+    
+   break;
+  default:
+   break;
+ }
+}

@@ -25,11 +25,15 @@ class EntidadBase{
   public function getAll(){
     $query = $this->db->query("SELECT * FROM $this->table ORDER BY id DESC");
 
-    while ($row = $query->fetch_object()) {
-      $resultSet[]=$row;
+    if($query->num_rows > 0){
+     while ($row = $query->fetch_object()) {
+       $resultSet[]=$row;
+     }
+     return $resultSet;
+    }else{
+     return false;
     }
     
-    return $resultSet;
   }
   //CONSULTA QUE ME DEVUELVE EL TOTAL DE LOS DATOS
   public function getAllNum(){

@@ -2,6 +2,7 @@
   class ControladorBase{
     
     public function __construct(){
+      require "vendor/autoload.php";
       require_once 'EntidadBase.php';
       require_once 'ModeloBase.php';
 

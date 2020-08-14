@@ -5,11 +5,9 @@ class SesionesController extends ControladorBase{
   $session = new Sesion();
   if(isset($_SESSION['usuario'])){
    $usuarioSesion=$_SESSION['usuario'];
-   // $user = new Usuario('usuarios');
-   // echo json_encode($user->getBy('usuario',$usuarioSesion));
    $this->view('index',[
-    // 'usuario'=>$usuarioSesion
-    ]);
+    "vistaArchivo"=>"inicio"
+   ]);
   }else {
    $this->redirect('login','validacionUsuario');
   }
@@ -31,6 +29,7 @@ class SesionesController extends ControladorBase{
   }else {
    $this->redirect('login','validacionUsuario');
   }
+
  }
 
 }

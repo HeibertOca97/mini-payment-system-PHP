@@ -1,6 +1,5 @@
 <link rel="stylesheet" href="src/css/registros.css">
 <script src="src/js/app.empleados.js"></script>
-<link rel="stylesheet" href="src/iconos/css/fontello.css">
 <!--MENSAJES-->
 <strong id="msg_evento" class=""></strong>
 <!--MODAL-->
@@ -8,7 +7,7 @@
 <!--FORMULARIO-->
 <div id="interface_registro_empleados">
   <h1>Gestion de Empleados</h1>
-  <section class="barra_ruta">
+  <section class="barra_ruta fondoElementos principalContenedor">
     <strong class="icon-home btnInicio">Tablero</strong>
     <span>/</span>
     <strong>Empleados</strong>
@@ -74,7 +73,7 @@
     </form>
   </article>
   <div id="box-barra-opciones">
-    <div></div>
+    <div id="info_datos"></div>
     <div>
       <select name="" id="txtDato">
         <option value="nombres">Nombres</option>
@@ -86,7 +85,7 @@
     <div><input type="text" placeholder="Buscar....." autocomplete="off" id="txtBuscar"></div>
   </div>
   <!--TABLA-->
-  <article id="cont_tb_empleados">
+  <article id="cont_tb_empleados" class="fondoElementos principalContenedor">
     <table id="tb_empleados">
       <thead>
         <tr>
@@ -104,6 +103,3 @@
     </table>
   </article>
 </div>
-<script>
-  //localStorage.setItem( "vista", "registro" );
-</script>

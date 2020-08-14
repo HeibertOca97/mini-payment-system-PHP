@@ -10,9 +10,7 @@ $controlador = new ControladorFrontal();
 //CARGAMOS CONTROLADORES Y ACCIONES
 if(isset($_GET['controller'])){
   $controllerObj = $controlador->cargarControlador($_GET['controller']);
-  //echo 'Existe controlador';
 }else {
   $controllerObj = $controlador->cargarControlador(CONTROLADOR_DEFECTO);
-  //echo 'Controlador no existente';
 }
 $controlador->lanzarAccion($controllerObj);
