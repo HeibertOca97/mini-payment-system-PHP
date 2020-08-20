@@ -2,9 +2,14 @@
 class EmpleadosController extends ControladorBase{
  
  public function ver(){
-  $this->view("index",[
-   "vistaArchivo"=>"registros"
-  ]);
+  $session = new Sesion();
+  if(isset($_SESSION['usuario'])){
+   $this->view("index",[
+    "vistaArchivo"=>"registros"
+   ]);
+  }else {
+   $this->redirect('login','validacionUsuario');
+  }
  }
 
  public function listar(){
@@ -12,16 +17,23 @@ class EmpleadosController extends ControladorBase{
   $session = new Sesion();
   if(isset($_SESSION['usuario'])){
     $emp = new Empleados("empleados");
-    echo json_encode($emp->getAll());
+    echo json_encode($emp->innerGetAll("cargo"));
   }else {
    $this->redirect('login','validacionUsuario');
   }
  }
  public function crear(){
   //INSERTA LOS DATOS EN LA TABLA
+ $session = new Sesion();
+ if(isset($_SESSION['usuario'])){
   if(isset($_POST['cedula']) && isset($_POST['nombre']) && isset($_POST['apellido'])){  
     $emp = new Empleados("empleados");
-    $emp->registrar($_POST["cedula"],$_POST["nombre"],$_POST["apellido"],$_POST["edad"],$_POST["sexo"],$_POST["cargo"],$_POST["sueldo"]);
+    
+    $emp->registrar($_POST["cedula"],$_POST["nombre"],$_POST["apellido"],$_POST["edad"],$_POST["sexo"],$_POST["cargo"]);
+    
+  }
+  }else{
+   $this->redirect('login','validacionUsuario');
   }
  }
  public function consultar(){
@@ -29,11 +41,9 @@ class EmpleadosController extends ControladorBase{
   if(isset($_SESSION['usuario'])){
    $emp = new Empleados("empleados");
    if(isset($_POST['columna']) && isset($_POST['dato'])){
-    echo json_encode($emp->consulta($_POST['columna'],$_POST['dato']));
-    // echo "Buscar";
+    echo json_encode($emp->consulta("cargo",$_POST['columna'],$_POST['dato']));
    }else{
-    // echo "listar";
-    echo json_encode($emp->listar());
+    echo json_encode($emp->innerGetAll("cargo"));
    }
   }else {
    $this->redirect('login','validacionUsuario');

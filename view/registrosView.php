@@ -8,7 +8,7 @@
 <div id="interface_registro_empleados">
   <h1>Gestion de Empleados</h1>
   <section class="barra_ruta fondoElementos principalContenedor">
-    <strong class="icon-home btnInicio">Tablero</strong>
+    <strong class="icon-gauge btnInicio">Tablero</strong>
     <span>/</span>
     <strong>Empleados</strong>
   </section>
@@ -22,19 +22,19 @@
           <div>
             <label for="">No. Identificacion</label>
             <input type="text" name="cedula" id="cedula" class="requerido" placeholder="Identificacion"
-              autocomplete="off">
+              autocomplete="off" maxlength="10">
             <span class="msg_inputs"></span>
           </div>
           <div>
             <label for="">Nombres</label>
             <input type="text" name="nombre" id="nombre" class="requerido" placeholder="Nombre completo"
-              autocomplete="off">
+              autocomplete="off" maxlength="30">
             <span class="msg_inputs"></span>
           </div>
           <div>
             <label for="">Apellidos</label>
             <input type="text" name="apellido" id="apellido" class="requerido" placeholder="Apellido completo"
-              autocomplete="off">
+              autocomplete="off" maxlength="30">
             <span class="msg_inputs"></span>
           </div>
           <div>
@@ -49,20 +49,17 @@
         <article>
           <div>
             <label for="">Edad</label>
-            <input type="number" name="edad" id="edad" class="requerido" autocomplete="off">
+            <input type="number" name="edad" id="edad" class="requerido" autocomplete="off" maxlength="2">
             <span class="msg_inputs"></span>
           </div>
           <div>
             <label for="">Cargo</label>
             <select name="cargo" id="cargo">
-              <option value="vendedor">Servicio al Cliente</option>
-              <option value="cargador">Cargador</option>
-              <option value="bodegero">Bodegero</option>
             </select>
           </div>
           <div>
             <label for="">Sueldo</label>
-            <input type="number" name="sueldo" id="sueldo" class="requerido" autocomplete="off">
+            <input type="number" name="sueldo" id="sueldo" class="requerido" autocomplete="off" readonly>
             <span class="msg_inputs"></span>
           </div>
         </article>
@@ -76,10 +73,10 @@
     <div id="info_datos"></div>
     <div>
       <select name="" id="txtDato">
+        <option value="cedula">Cedula</option>
         <option value="nombres">Nombres</option>
         <option value="apellidos">Apellidos</option>
-        <option value="cargo">Cargo</option>
-        <option value="fecha">Fecha</option>
+        <option value="nombre">Cargo</option>
       </select>
     </div>
     <div><input type="text" placeholder="Buscar....." autocomplete="off" id="txtBuscar"></div>

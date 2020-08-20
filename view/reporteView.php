@@ -35,75 +35,79 @@
 <page_header>
  <img src="https://www.muylinux.com/wp-content/uploads/2010/05/opensource-logo.png" width="70" height="70">
 </page_header>
-<page_footer>Footer</page_footer>
-<!-- <page></page>  -->
-<table class="tb_head">
-  <tr>
-   <th colspan="2">SYSTEMCODEWEB S.A</th>
-   <th colspan="2">No 01</th>
-  </tr>
-  <tr>
-   <td>Rol de pagos individual</td>
-   <td>Mes:</td>
-   <th>May </th>
-   <th> de 2020</th>
-  </tr>
-  <tr>
-   <td>Empleado</td>
-   <td>Heibert Joseph Ocaña Rodriguez</td>
-  </tr>
-  <tr>
-   <td>Cargo</td>
-   <td>Desarrollador Web</td>
-  </tr>
- </table>
- <br>
- <br>
- <table class="tb_body">
-  <tr>
-   <th colspan="2">INGRESOS</th>
-   <th colspan="2">DESCUENTOS</th>
-  </tr>
-  <tr>
-   <td>Sueldo basico</td>
-   <td><strong>$</strong> <span>340,00</span></td>
-   <td>Aportes IESS</td>
-   <td><strong>$</strong> <span>41,14</span></td>
-  </tr>
-  <tr>
-   <td>Horas extras</td>
-   <td><strong>$</strong> <span>0,00</span></td>
-   <td>Prestamos Quirogr. IESS</td>
-   <td><strong>$</strong> <span>0,00</span></td>
-  </tr>
-  <tr>
-   <td>Comisiones</td>
-   <td><strong>$</strong> <span>100,00</span></td>
-   <td>Prest. Y Antic. Empresa</td>
-   <td><strong>$</strong> <span>0,00</span></td>
-  </tr>
-  <tr>
-   <td>TOTAL INGRESOS</td>
-   <td><strong>$</strong> <span>440,00</span></td>
-   <td>TOTAL DESCUENTOS</td>
-   <td><strong>$</strong> <span>41,14</span></td>
-  </tr>
-   <tr>
-    <td colspan="2">NETO A PAGAR</td>
-    <td colspan="2"><strong>$</strong> <span>398,86</span></td>
-   </tr>
-   <tr>
-    <td colspan="4">
-     <p>____________________</p>
-     <p>RECIBI CONFORME</p>
-    </td>
-   </tr>
-   <tr>
-    <td colspan="4">
-     <p>C.I. _________________</p>
-    </td>
-   </tr>
-  </table>
+<page_footer>Fecha de impresion: <?php if(isset($datos)){echo $datos[20]; } ?></page_footer>
+<?php
+ function mostrarMes($obj){
+  $meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+   return $meses[$obj];
+ }
+ if(isset($datos)){
+   echo '
+   <br><br><br><br><br>
+   <table class="tb_head">
+     <tr>
+      <th colspan="2">SYSTEMCODEWEB S.A</th>
+      <th colspan="2">No. '.$datos[12].'</th>
+     </tr>
+     <tr>
+      <td>Rol de pagos individual</td>
+      <td>Mes:</td>
+      <th>'.mostrarMes((substr($datos[20],5,-3)-1)).', '.substr($datos[20],8).'</th>
+      <th>de '.substr($datos[20],0,4).'</th>
+     </tr>
+     <tr>
+      <td>Empleado</td>
+      <td>'.$datos[2].' '.$datos[3].'</td>
+     </tr>
+     <tr>
+      <td>Cargo</td>
+      <td>'.$datos[9].'</td>
+     </tr>
+    </table>
+    <br>
+    <br>
+    <table class="tb_body">
+     <tr>
+      <th colspan="2">INGRESOS</th>
+      <th colspan="2">DESCUENTOS</th>
+     </tr>
+     <tr>
+      <td>Sueldo basico</td>
+      <td><strong>$</strong> <span>'.$datos[10].'</span></td>
+      <td>Aportes IESS</td>
+      <td><strong>$</strong> <span>'.$datos[15].'</span></td>
+     </tr>
+     <tr>
+      <td>Horas extras</td>
+      <td><strong>$</strong> <span>'.$datos[14].'</span></td>
+      <td>Prest. Y Antic.</td>
+      <td><strong>$</strong> <span>'.$datos[16].'</span></td>
+     </tr>
+     <tr>
+      <td>TOTAL INGRESOS</td>
+      <td><strong>$</strong> <span>'.$datos[17].'</span></td>
+      <td>TOTAL DESCUENTOS</td>
+      <td><strong>$</strong> <span>'.$datos[18].'</span></td>
+     </tr>
+      <tr>
+       <td colspan="2">NETO A PAGAR</td>
+       <td colspan="2"><strong>$</strong> <span>'.$datos[19].'</span></td>
+      </tr>
+      <tr>
+       <td colspan="4">
+        <p>____________________</p>
+        <p>RECIBI CONFORME</p>
+       </td>
+      </tr>
+      <tr>
+       <td colspan="4">
+        <p>C.I. _________________</p>
+       </td>
+      </tr>
+     </table>
+   ';
+ }
+?>
 <!-- <div class="principalContenedor">
  </div> -->
 </body>

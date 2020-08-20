@@ -58,7 +58,7 @@ SECTION
  left: 0;
  z-index: 50;
  width: 100%;
- height: 100%;
+ height: 100vh;
  overflow: auto;
  background-color: rgba(255, 255, 255, 0);
 }
@@ -121,6 +121,7 @@ FOOTER
  text-align: center;
  color: #fff;
  background-image: linear-gradient(rgba(19, 18, 18, 0.699), rgb(19, 18, 18));
+ margin: 75px auto 70px auto;
 }
 
 #footer>p {
@@ -138,8 +139,79 @@ ESTILO DEL CONTENEDOR GENERAL DEL CONTENEDOR
 
 .fondoElementos {
  background-color: rgba(105, 105, 105, 0.192);
+ margin-top: 15px;
+ margin-bottom: 15px;
 }
 
 .headerBlack {
  background-color: rgb(19, 18, 18);
+}
+
+/****************
+MENSAJES EN PANTALLA
+*************/
+#msg_evento {
+ display: none;
+ position: fixed;
+ z-index: 90;
+ right: 0%;
+ bottom: 10%;
+ text-align: center;
+ padding: 10px 15px;
+ box-sizing: border-box;
+ border-radius: 5px;
+ color: #fff;
+}
+
+#msg_evento>strong {
+ color: rgba(199, 199, 199, 0.897);
+ cursor: pointer;
+ margin-left: 5px;
+}
+
+#msg_evento>strong:hover {
+ text-decoration: underline;
+ color: rgb(255, 255, 255);
+}
+
+.cl_atencion {
+ background-color: rgb(251, 35, 35);
+}
+
+.cl_correcto {
+ background-color: rgb(9, 139, 89);
+}
+
+.msg_span {
+ color: red;
+ padding: 5px 8px;
+ box-sizing: border-box;
+ text-align: center;
+ display: block;
+}
+
+/****************
+BARRA DE DIRECCION O RUTA
+***************/
+.barra_ruta {
+ padding: 15px 5px;
+ box-sizing: border-box;
+ margin: 0 auto 25px auto;
+}
+
+.barra_ruta strong:nth-of-type(1) {
+ color: rgb(0, 76, 255);
+}
+
+.barra_ruta strong:hover:nth-of-type(1) {
+ text-decoration: underline;
+ cursor: pointer;
+}
+
+.barra_ruta strong:nth-of-type(2) {
+ color: rgb(223, 223, 223);
+}
+
+.barra_ruta>span {
+ color: #fff;
 }

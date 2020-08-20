@@ -7,15 +7,13 @@ class Empleados extends EntidadBase{
     parent::__construct($table);
   }
 
-  public function registrar($ci,$nom,$ape,$ed,$se,$car,$su){
-    $consulta = "INSERT INTO $this->table(id,cedula,nombres,apellidos,edad,sexo,cargo,sueldo,fecha) VALUES(null,'$ci','$nom','$ape','$ed','$se','$car','$su',NOW())";
+  public function registrar($ci,$nom,$ape,$ed,$se,$car){
+    $consulta = "INSERT INTO $this->table(cedula,nombres,apellidos,edad,sexo,idCargo,fecha) VALUES('$ci','$nom','$ape',$ed,'$se',$car,NOW())";
     $query = $this->db()->query($consulta);
-
-    return $query;
   }
   
-  public function consulta($columna,$datos){
-   $consulta = "SELECT * FROM $this->table WHERE $columna LIKE '%$datos%' ORDER BY id DESC";
+  public function consulta($tabla,$columna,$datos){
+   $consulta = "SELECT * FROM $this->table INNER JOIN $tabla ON $this->table.idCargo = $tabla.id WHERE $columna LIKE '%$datos%' ORDER BY $tabla.id DESC";
    $query = $this->db()->query($consulta);
    if($query->num_rows > 0){
     while($row=$query->fetch_object()){
@@ -26,6 +24,30 @@ class Empleados extends EntidadBase{
     return false;
    }
   } 
+ //INSERTAR EN TBPIVO
+ 
+ //METODOS ARITMETICOS
+ public function calcularSalarioPorHoras($sueldo){
+  $sueldoPorHoras = ($sueldo / 20) / 8;
+  return $sueldoPorHoras;
+ }
+
+ public function calcularHorasExtra($sueldoPorHoras,$recargo){
+  $sueldoHorasExtras = (($sueldoPorHoras * $recargo) / 100) + $sueldoPorHoras;
+  return $sueldoHorasExtras;
+ }
+
+ public function horasExtras($sueldo, $recargo,$dias){
+  $sueldoSalarioHoras = self::calcularSalarioPorHoras($sueldo);
+  $sueldoHorasExtras = self::calcularHorasExtra($sueldoSalarioHoras,$recargo);
+  $totalHorasExtras = $sueldoHorasExtras * $dias;
+  return $totalHorasExtras;
+ }
+
+ public function aporteIEES($sueldo){
+  $aporte = ($sueldo * 9.45) / 100;
+  return $aporte;
+ }
 
 }
 ?>

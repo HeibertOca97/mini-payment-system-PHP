@@ -1,0 +1,225 @@
+var generarRolPago = ()=>{
+ for (let b = 0; b < $(".btnGenerar").length; b++) {
+  $(".btnGenerar").eq(b).click((e)=>{
+   //CALCULOS OPERACIONES
+   const sueldo = Number(parseFloat($(".btnGenerar").eq(b).parent().parent().children().eq(3).text()));
+   const prestamo= $("#txt_prestamo").val();
+   // const fecha_emision = new Date().toLocaleDateString().split('/').reverse().join('-');
+   const fecha_emision = $("#txt_fecha").val();
+   //CALCULOS
+   const aporte = aporteIEES(sueldo);
+   const h_extra = horasExtras(sueldo,25,2);
+   const t_ingresos = totalIngreso(sueldo,h_extra);
+   const t_descuento = totalDesc(aporte,prestamo);
+   const t_salario = totalNeto(t_ingresos,t_descuento);
+   //ID DEL EMPLEADO
+   const el = e.target;
+   const ids = el.getAttribute("ids");
+   const datos = {
+    id:ids,
+    aporte:aporte,
+    horasExtras:h_extra,
+    prestamos:prestamo,
+    ingresos:t_ingresos,
+    descuentos:t_descuento,
+    salario:t_salario,
+    fecha:fecha_emision
+   };
+   if(parseInt($("#txt_fecha").val()) > parseInt("0000-00-00")){
+    $.post("index.php?controller=Reportes&action=crear",datos,res=>{
+     if(res=="creado"){
+      const el = toggleMensaje( 'icon-ok', 'Rol de pago generado' );
+      $( '#msg_evento' ).html( el );
+      $( '#msg_evento' ).addClass( 'cl_correcto' );
+      $( '#msg_evento' ).slideDown( '300' );
+     }
+    });
+   }else{
+    const el = toggleMensaje( 'icon-attention', 'Escoga una fecha valida' );
+    $( '#msg_evento' ).html( el );
+    $( '#msg_evento' ).addClass( 'cl_atencion' );
+    $( '#msg_evento' ).slideDown( '300' );
+   }
+   removerMensaje();
+  });  
+ }
+}
+
+var imprimirReporte = ()=>{
+ for (let b = 0; b < $(".btnImprimir").length; b++) {
+  if($(".btnImprimir").eq(b).attr("href") == "http://localhost/SistemaPago/index.php?controller=Reportes&action=ver"){
+   $(".btnImprimir").eq(b).click(e=>e.preventDefault());
+  }else{
+   $(".btnImprimir").eq(b).click((e)=>{
+    e.preventDefault();
+    // console.log($(".btnImprimir").eq(b).attr('href'));
+    window.open($(".btnImprimir").eq(b).attr('href'),"_blank");
+    // $(".btnImprimir").eq(b).attr('target','_blank')
+   });
+  }
+ }
+}
+
+//FUNCIONES ARITMETICAS
+function totalIngreso(sueldo,valorExtra){
+ const ingresos = sueldo + valorExtra;
+ return ingresos;
+}
+
+function totalDesc(aporte,prestamos){
+ const desc = aporte+prestamos;
+ return desc;
+}
+
+function totalNeto(ingresos,descuentos){
+ const salario= ingresos - descuentos;
+ return salario;
+}
+
+function calcularSalarioPorHoras(sueldo){
+ const sueldoPorHoras = (sueldo / 20) / 8;
+ return sueldoPorHoras;
+}
+
+function calcularHorasExtra(sueldoPorHoras,recargo){
+ const sueldoHorasExtras = ((sueldoPorHoras * recargo) / 100) + sueldoPorHoras;
+ return sueldoHorasExtras;
+}
+
+function horasExtras(sueldo, recargo, dias){
+ const sueldoSalarioHoras = calcularSalarioPorHoras(sueldo);
+ const sueldoHorasExtras = calcularHorasExtra(sueldoSalarioHoras,recargo);
+ const totalHorasExtras = sueldoHorasExtras * dias;
+ return totalHorasExtras;
+}
+
+function aporteIEES(sueldo){
+ const aporte= (sueldo * 9.45) / 100;
+ return aporte;
+}
+
+/****************
+ * BUSCADOR
+ * ***************/
+var buscarEmpleado = () => {
+ const datosABuscar = ()=>{
+  if($("#txtBuscar").val() && $("#txtBuscar").length > 0 && $("#txtDato").val()){
+   const inputBuscador = {
+    columna:$("#txtDato").val(),
+    dato:$("#txtBuscar").val()
+   }
+   let tr=``;
+   $.post( "index.php?controller=Empleados&action=consultar",inputBuscador, res => {
+    if(res != "false"){
+     const datos = JSON.parse(res);
+     datos.filter(data => {
+      const {
+         cedula,
+         nombres,
+         apellidos,
+         nombre,
+         sueldo
+       } = data;
+      tr += `
+       <tr>
+        <td>${cedula}</td>
+        <td>${nombres} ${apellidos}</td>
+        <td>${nombre}</td>
+        <td>${sueldo}</td>
+        <td><button ids="${data[0]}" class="btnGenerar">Generar Rol de pago</button></td>
+       </tr>
+     `;  
+    });
+    $( '#datos_pagos_empleados' ).html( tr );
+    // getNumberData(`| encontrados ${datos.length}`);
+     generarRolPago();
+    }else{
+     let tr = `<tr><td colspan="7" style="text-align:center;color:#fff;line-height:3em;">El dato ingresado no existe</td></tr>`;
+     $( '#datos_pagos_empleados' ).html(tr);
+    }
+   });
+  }else{
+   getDatosEmpleados();
+  }
+ }
+ $("#txtBuscar").keyup(datosABuscar);
+}
+
+var buscarReporte = () => {
+ const datosABuscar = ()=>{
+  if($("#txtBuscar2").val() && $("#txtBuscar2").length > 0 && $("#txtDato2").val()){
+   const inputBuscador = {
+    columna:$("#txtDato2").val(),
+    dato:$("#txtBuscar2").val()
+   }
+   let box=``;
+   $.post( "index.php?controller=Reportes&action=consultarReportes",inputBuscador, res => {
+    if(res != "false"){
+     const datos = JSON.parse(res);
+     datos.filter(data => {
+      const {
+         id,
+         nombres,
+         apellidos,
+         fecha_emision
+      } = data;
+      box += `
+       <div id="card-rolpagos">
+        <p>${nombres} ${apellidos}</p>
+        <p>${fecha_emision}</p>
+        <div><a href="index.php?controller=Reportes&action=reporteGenerado&id=${id}&fecha=${fecha_emision}" target="_blank">Imprimir</a></div>
+       </div>
+      `;  
+    });
+    $( '#card-datos' ).html( box );
+    }else{
+     $( '#card-datos' ).html('<p style="text-align:center;color:#fff;line-height:3em;">El dato ingresado no existe o es incorrecto, intente de nuevamente</p>');
+    }
+   });
+  }else{
+  $( '#card-datos' ).html('');
+ }
+ }
+ $("#txtBuscar2").keyup(datosABuscar);
+}
+
+//FUNCION DE IMPRIMIR LOS DATOS
+//FUNCION UTILIZADA PARA ACTUALIZAR LOS REGISTROS
+var getDatosEmpleados = () => {
+  $.get( "index.php?controller=Empleados&action=consultar", res => {
+   let tr=``;
+   if(res != "false"){
+    const req = JSON.parse( res );
+    req.filter( datos => {
+      const {
+        cedula,
+        nombres,
+        apellidos,
+        nombre,
+        sueldo
+      } = datos;
+      tr += `
+       <tr>
+        <td>${cedula}</td>
+        <td>${nombres} ${apellidos}</td>
+        <td>${nombre}</td>
+        <td>${sueldo}</td>
+        <td><button ids="${datos[0]}" class="btnGenerar">Generar Rol de pago</button></td>
+       </tr>
+     `;
+    } );
+    $( "#datos_pagos_empleados" ).html( tr );
+    generarRolPago();
+   }else{
+    $( "#datos_pagos_empleados" ).html( "" );
+   }
+  } );
+}
+
+$(document).ready(()=>{
+ regresarAtraz();
+ buscarEmpleado();
+ getDatosEmpleados();
+ buscarReporte();
+ 
+});

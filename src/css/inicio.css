@@ -64,12 +64,111 @@
 /****************************************
 SECCION CREAR CARGOS
 ****************************************/
-#box-cargos article,
-#box-cargos aside {
+#box-cargos article div {
+ margin: 10px auto;
+}
+
+#box-cargos article label {
  display: block;
+ padding: 5px;
+ box-sizing: border-box;
+ color: white;
+ font-weight: bold;
+}
+
+#box-cargos article input {
+ display: block;
+ width: 95%;
+ margin: auto;
+ padding: 10px 5px;
+ box-sizing: border-box;
+ outline: none;
+ background-color: rgba(207, 207, 207, 0.062);
+ border: 2px solid transparent;
+ border-bottom: 2px solid rgb(25, 0, 255);
+}
+
+#box-cargos article input:active,
+#box-cargos article input:focus {
+ border-bottom: 2px solid rgb(109, 93, 255);
+ color: rgba(255, 255, 255, 0.89);
+}
+
+#box-cargos article div:nth-of-type(1) {
+ margin-top: 25px;
+}
+
+#box-cargos article div:nth-last-of-type(1) {
+ margin-top: 25px;
+}
+
+#box-cargos article button {
+ display: block;
+ border: none;
+ border-radius: 4px;
+ width: 95%;
+ margin: auto;
+ line-height: 2.8em;
+ display: block;
+ color: #fff;
+ background-color: rgb(0, 163, 82);
+ text-transform: uppercase;
+ font-weight: bold;
+ cursor: pointer;
+ transition: all 200ms ease-in;
+ -moz-transition: all 200ms ease-in;
+ -webkit-transition: all 200ms ease-in;
+ -o-transition: all 200ms ease-in;
+}
+
+#box-cargos article button:hover {
+ background-color: rgb(0, 163, 38);
+}
+
+/***CAJA DE CARGOS****/
+#box-cargos aside {
+ overflow: auto;
 }
 
 #box-cargos {
  display: flex;
  flex-wrap: wrap;
+ flex-direction: column;
+ margin: 10px auto;
+}
+
+@media all and (min-width:500px) {
+ #box-cargos {
+  flex-direction: row;
+  flex-wrap: nowrap;
+ }
+
+ #box-cargos article {
+  width: 30%;
+ }
+
+ #box-cargos aside {
+  width: 70%;
+ }
+}
+
+
+.elem-cargos {
+ color: #fff;
+ background-color: rgb(50, 50, 199);
+ padding: 8px 10px;
+ display: inline-block;
+ box-sizing: border-box;
+ margin: 5px;
+ border-radius: 5px;
+ cursor: pointer;
+ transition: all 200ms ease-in;
+ -moz-transition: all 200ms ease-in;
+ -webkit-transition: all 200ms ease-in;
+ -o-transition: all 200ms ease-in;
+}
+
+.elem-cargos:hover {
+ /* background-color: rgb(66, 66, 255); */
+ background-color: rgb(15, 15, 195);
 }

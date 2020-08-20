@@ -33,15 +33,8 @@ class EntidadBase{
     }else{
      return false;
     }
-    
   }
-  //CONSULTA QUE ME DEVUELVE EL TOTAL DE LOS DATOS
-  public function getAllNum(){
-    $query = $this->db()->query("SELECT * FROM ".$this->table);
-      
-    return $query->num_rows;
-  }
-  
+
   public function getById($id){
     $query = $this->db->query("SELECT * FROM $this->table WHERE id=$id");
     
@@ -74,6 +67,31 @@ class EntidadBase{
     return $query;
   }
 
+  public function innerGetAll($table){
+   $query = $this->db->query("SELECT * FROM $this->table INNER JOIN $table ON $this->table.idCargo = $table.id ORDER BY $this->table.id DESC");
+
+    if($query->num_rows > 0){
+     while ($row = $query->fetch_array()) {
+       $resultSet[]=$row;
+     }
+     return $resultSet;
+    }else{
+     return false;
+    }
+  }
+
+  public function innerGetById($table,$id){
+   $query = $this->db->query("SELECT * FROM $this->table INNER JOIN $table ON $this->table.idCargo = $table.id WHERE $this->table.id = $id");
+
+    if($query->num_rows > 0){
+     if($row = $query->fetch_object()) {
+       $resultSet[]=$row;
+     }
+     return $resultSet;
+    }else{
+     return false;
+    }
+  }
 
 }
 ?>

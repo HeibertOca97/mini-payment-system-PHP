@@ -44,14 +44,41 @@ function render(vista){
  switch (vista) {
   case "inicio":
    location.href = "index.php?controller=Sesiones&action=index";
-   break;
-   case "registro":
+  break;
+  case "registro":
     location.href = "index.php?controller=Empleados&action=ver";
-    break;
-    case "pagos":
-    
-   break;
+  break;
+  case "pagos":
+    location.href = "index.php?controller=Reportes&action=ver";
+  break;
   default:
-   break;
+  break;
  }
+}
+
+function toggleMensaje( el, msg ){
+  const icono = `<span class="${el}"></span> ${msg} <strong id="deshacer">Deshacer</strong>`;
+  return icono;
+}
+
+function removerMensaje(){
+ setTimeout( () => {
+  $( '#msg_evento' ).slideUp( '300' );
+  $( '#msg_evento' ).html( '' );
+  $( '#msg_evento' ).addClass( '' );
+  $( '#msg_evento' ).removeClass( 'cl_correcto' );
+  $( '#msg_evento' ).removeClass( 'cl_atencion' );
+ }, 5000 );
+ $( '#deshacer' ).click( () => {
+  $( '#msg_evento' ).slideUp( '300' );
+  $( '#msg_evento' ).html( '' );
+  $( '#msg_evento' ).addClass( '' );
+  $( '#msg_evento' ).removeClass( 'cl_correcto' );
+  $( '#msg_evento' ).removeClass( 'cl_atencion' );
+ } );
+}
+
+var regresarAtraz = ()=>{
+ const url = ()=> render("inicio");
+ $(".btnInicio").click(url);
 }

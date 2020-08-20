@@ -4,6 +4,8 @@
 <script src="src/js/index.js"></script>
 <!--HTML-->
 <div id="componenteInicio" class="principalContenedor">
+ <!--MENSAJES-->
+ <strong id="msg_evento" class=""></strong>
  <div>
   <h1 class="fondoElementos"><i class="icon-gauge"></i>Tablero</h1>
  </div> 
@@ -27,19 +29,17 @@
  <section id="box-cargos" class="fondoElementos">
   <article>
    <div>
-    <label for="">Ingrese un cargo</label>
+    <label for="">Ingresar cargo:</label>
     <input type="text" id="txtCargo">
    </div>
    <div>
-    <label for="">Ingrese un cargo</label>
+    <label for="">Ingresar sueldo:</label>
     <input type="number" id="txtSueldo">
    </div>
    <div>
-    <button id="crearCargos">Crear</button>
+    <button id="crearCargos" idcar="">Crear</button>
    </div>
   </article>
-  <aside id="lista_cargos">
-   
-  </aside>
+  <aside id="lista_cargos"></aside>
  </section>
 </div>

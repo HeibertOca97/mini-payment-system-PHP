@@ -12,26 +12,26 @@ $( document ).ready( () => {
   removerEstilosError();
   //FUNCION 4
   //FUNCION ENCARGADA DE ENVIAR LOS DATOS AL SERVIDOR
-  accionarRegistroEmpleados();
+   $( "#btn_registrar" ).click( accionarRegistroEmpleados);
   //FUNCIONALIDADES
   accionarToggleForm();
-  modals();
+  //FUNCION ENCARGADA DE OBTENER LOS CARGOS
+  getCargos();
+  //FUNCION ENCARGADA DE OBTENER LOS SALARIOS DE LOS CARGOS
+  getSalarioCargo();
 } );
 
-//FUNCION 1
-var regresarAtraz = ()=>{
- const url = ()=> render("inicio");
- $(".btnInicio").click(url);
-}
 var getNumberData = (info='') => {
  $.get( "index.php?controller=Empleados&action=listar", data => {
   const numberData = JSON.parse( data ).length;
-    $( '#info_datos' ).html( `<p>Total: registros ${numberData} ${info}</p>` );
+  if(numberData>0){
+   $( '#info_datos' ).html( `<p>Total: registros ${numberData} ${info}</p>` );
+  }
   } );
 }
 
 var accionarRegistroEmpleados = () => {
-  $( "#btn_registrar" ).click( () => {
+ 
     $( "#fr_empleado" ).submit( e => {
       e.preventDefault();
       if ( validarFr() ) {
@@ -51,22 +51,8 @@ var accionarRegistroEmpleados = () => {
         $( '#msg_evento' ).slideDown( '300' );
         accionarEstilosEventoError();
       }
-      setTimeout( () => {
-        $( '#msg_evento' ).slideUp( '300' );
-        $( '#msg_evento' ).html( '' );
-        $( '#msg_evento' ).addClass( '' );
-        $( '#msg_evento' ).removeClass( 'cl_correcto' );
-        $( '#msg_evento' ).removeClass( 'cl_atencion' );
-      }, 5000 );
-      $( '#deshacer' ).click( () => {
-        $( '#msg_evento' ).slideUp( '300' );
-        $( '#msg_evento' ).html( '' );
-        $( '#msg_evento' ).addClass( '' );
-        $( '#msg_evento' ).removeClass( 'cl_correcto' );
-        $( '#msg_evento' ).removeClass( 'cl_atencion' );
-      } );
+      removerMensaje();
     } );
-  } );
 }; //FUNCION QUE VALIDA LOS CAMPOS QUE SEAN REQUERIDOS
 
 
@@ -133,43 +119,46 @@ var registrarEmpleado = formulario => {
     success: res => {
       //ACTUALIZA LOS REGISTROS
       getDatosEmpleados();
-      console.log("Registrado")
      }
- } );
+  } );
 }
 //FUNCION 2
 //FUNCION DE IMPRIMIR LOS DATOS
 //FUNCION UTILIZADA PARA ACTUALIZAR LOS REGISTROS
 var getDatosEmpleados = () => {
-  $.get( "index.php?controller=Empleados&action=consultar", data => {
+  $.get( "index.php?controller=Empleados&action=consultar", res => {
    let tr=``;
-    const res = JSON.parse( data );
-    res.filter( datos => {
+   if(res != "false"){
+    const req = JSON.parse( res );
+    req.filter( datos => {
       const {
        id,
         cedula,
         nombres,
         apellidos,
         edad,
-        cargo,
-        sueldo,
-        fecha
+        nombre,
+        fecha,
+        sueldo
       } = datos;
       tr += `
-    <tr>
-        <td>${cedula}</td>
-        <td>${nombres} ${apellidos}</td>
-        <td>${cargo}</td>
-        <td>${edad}</td>
-        <td>${sueldo}</td>
-        <td>${fecha}</td>
-        <td><button idEmp="${id}" class="icon-trash-empty btnDelete"></button><button class="icon-edit"></button></td>
-    </tr>
-  `;
- } );
- $( '#datos_empleados' ).html( tr );
+       <tr>
+           <td>${cedula}</td>
+           <td>${nombres} ${apellidos}</td>
+           <td>${nombre}</td>
+           <td>${edad}</td>
+           <td>${sueldo}</td>
+           <td>${fecha}</td>
+           <td><button idEmp="${id}" class="icon-trash-empty btnDelete"></button><button class="icon-edit"></button></td>
+       </tr>
+     `;
+    } );
+    $( '#datos_empleados' ).html( tr );
     getNumberData();
     eliminarDato();
+   }else{
+    $( '#datos_empleados' ).html( "" );
+   }
   } );
 }
 /**************
@@ -200,10 +189,10 @@ var buscarDatos = () => {
     columna:$("#txtDato").val(),
     dato:$("#txtBuscar").val()
    }
+   let tr=``;
    $.post( "index.php?controller=Empleados&action=consultar",inputBuscador, res => {
-    const datos = JSON.parse(res);
     if(res != "false"){
-     let tr=``;
+     const datos = JSON.parse(res);
      datos.filter(data => {
       const {
         id,
@@ -211,7 +200,7 @@ var buscarDatos = () => {
          nombres,
          apellidos,
          edad,
-         cargo,
+         nombre,
          sueldo,
          fecha
        } = data;
@@ -219,7 +208,7 @@ var buscarDatos = () => {
        <tr>
         <td>${cedula}</td>
         <td>${nombres} ${apellidos}</td>
-        <td>${cargo}</td>
+        <td>${nombre}</td>
         <td>${edad}</td>
         <td>${sueldo}</td>
         <td>${fecha}</td>
@@ -239,9 +228,8 @@ var buscarDatos = () => {
   }else{
    getDatosEmpleados();
   }
-}
+ }
  $("#txtBuscar").keyup(datosABuscar);
- 
 }
 /****************
  * FUNCIONALIDADES DE LA INTERFAZ
@@ -262,7 +250,28 @@ var accionarToggleForm = () => {
   $( '#btnNuevo' ).click( formularioEvent );
 }
 
-var toggleMensaje = ( el, msg ) => {
-  const icono = `<span class="${el}"></span> ${msg} <strong id="deshacer">Deshacer</strong>`;
-  return icono;
+var getCargos = ()=>{
+ $.get("index.php?controller=Cargos&action=listar",res=>{
+  if(res != "false"){
+   let opciones=``;
+   opciones += `<option value="">Seleccione un cargo de la lista</option>`;
+   const datos = JSON.parse(res);
+   datos.forEach((x,z)=>{
+    opciones += `
+     <option value="${x.id}" class="txtCargos">${x.nombre}</option>
+    `;
+   });
+   $("#cargo").html(opciones);
+  }
+ });
+}
+
+var getSalarioCargo = ()=>{
+  $("#cargo").change(()=>{
+   const id={id:$("#cargo").val()};
+   $.post("index.php?controller=Cargos&action=consultar",id,res=>{
+    const salario = JSON.parse(res);
+    salario.filter(x=>$("#sueldo").val(x.sueldo));
+   });
+  });
 }

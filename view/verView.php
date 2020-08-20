@@ -9,7 +9,6 @@ try {
  $html = ob_get_clean();
  
  $html2pdf = new Html2Pdf("P","A4","es",true,"UTF-8");
- //$html2pdf->setDefaultFont('Arial');
  $html2pdf->writeHTML($html);
  $html2pdf->Output('otro.pdf');
 } catch (Html2PdfException $e) {

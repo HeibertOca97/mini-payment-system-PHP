@@ -26,7 +26,7 @@
     <div id="box_link">
       <strong class="icon-gauge link" link="inicio" name="inicio"></strong>
       <strong class="icon-users link" link="registro" name="registro"></strong>
-      <strong class="icon-list-alt link" link="pagos" name="Pagos"></strong>
+      <strong class="icon-list-alt link" link="pagos" name="pagos"></strong>
     </div>
   </nav>
   <div id="box_fondo"></div>
@@ -35,17 +35,13 @@
   <?php
    if(isset($vistaArchivo)){
     require_once "view/".$vistaArchivo."View.php";
-
-    echo '<a href="index.php?controller=Sesiones&action=Logout">Salir del sitio</a>';
-    // echo '<a href="index.php?controller=Vistas&action=Reportes" target="_blank">Ver Reporte</a>';
    }
   ?>
-  <p class="usuario" style="color:#fff;"></p>
-   <footer id="footer">
-    <p>Sistema de pagos</p>
-    <p>Desarrollado por estudiantes de la UNESUM. Carrera de Ingenieria en Computacion y Redes</p>
-   </footer>
-  </section>
+  <footer id="footer">
+   <p>Sistema de pagos</p>
+   <p>Desarrollado por estudiantes de la UNESUM. Carrera de Ingenieria en Computacion y Redes</p>
+  </footer>
+ </section>
 </body>
 
 </html>

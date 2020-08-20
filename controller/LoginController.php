@@ -11,7 +11,6 @@ class LoginController extends ControladorBase{
      if($user->consultar($_POST['usuario'],$_POST['contraseña'])){
       $user->__set('user',$_POST['usuario']);
       $user->__set('pass',$_POST['contraseña']);
-      //echo $user->__get('user').' '.$user->__get('pass');
       $sesion->usuarioSesion($user->__get('user'));
       echo 1;
      }else{

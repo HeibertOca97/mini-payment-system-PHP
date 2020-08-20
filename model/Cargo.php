@@ -25,22 +25,19 @@ class Cargo extends EntidadBase{
  public function insertar(){
   $insertar = "INSERT INTO $this->table(nombre,sueldo,estado) VALUES('$this->nombre',$this->sueldo,'activado')";
   
-  $query = $this->db()->query($insertar);
-  return $query;
+  $this->db()->query($insertar);
  }
 
  public function actualizar(){
   $actualizar = "UPDATE $this->table SET nombre='$this->nombre',sueldo='$this->sueldo' WHERE id='$this->id'";
   
-  $query = $this->db()->query($actualizar);
-  return $query;
+  $this->db()->query($actualizar);
  }
  
  public function actualizacionEspecificar($columna,$valor){
   $actualizar = "UPDATE $this->table SET $columna = '$valor' WHERE id=$this->id";
   
-  $query = $this->db()->query($actualizar);
-  return $query;
+  $this->db()->query($actualizar);
  }
 
 }

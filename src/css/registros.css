@@ -9,32 +9,6 @@ TITULO
  max-width: 1000px;
 }
 
-/****************
-BARRA DE DIRECCION O RUTA
-***************/
-.barra_ruta {
- padding: 15px 5px;
- box-sizing: border-box;
- margin: 0 auto 25px auto;
-}
-
-.barra_ruta strong:nth-of-type(1) {
- color: rgb(0, 76, 255);
-}
-
-.barra_ruta strong:hover:nth-of-type(1) {
- text-decoration: underline;
- cursor: pointer;
-}
-
-.barra_ruta strong:nth-of-type(2) {
- color: rgb(223, 223, 223);
-}
-
-.barra_ruta>span {
- color: #fff;
-}
-
 /**********************
 FOMRULARIO
 ********************/
@@ -166,6 +140,7 @@ ESTILOS TABLA EMPLEADOS
 #cont_tb_empleados {
  margin: 0 auto 75px auto;
  overflow: auto;
+ height: 500px;
 }
 
 #tb_empleados {
@@ -184,6 +159,14 @@ ESTILOS TABLA EMPLEADOS
  box-sizing: border-box;
  padding: 15px 10px;
  background-color: rgba(146, 146, 146, 0.561);
+}
+
+#tb_empleados>tbody>tr:hover {
+ background-color: #fff;
+ transition: all 200ms ease-in;
+ -webkit-transition: all 200ms ease-in;
+ -moz-transition: all 200ms ease-in;
+ -o-transition: all 200ms ease-in;
 }
 
 #tb_empleados>tbody>tr>td {
@@ -240,47 +223,4 @@ ESTILOS TABLA EMPLEADOS
  flex-wrap: wrap;
  align-items: center;
  justify-content: center;
-}
-
-/******************
-ESTILOS DE MENSAJES
-*****************/
-#msg_evento {
- display: none;
- position: fixed;
- z-index: 90;
- right: 0%;
- bottom: 10%;
- text-align: center;
- padding: 10px 15px;
- box-sizing: border-box;
- border-radius: 5px;
- color: #fff;
-}
-
-#msg_evento>strong {
- color: rgba(199, 199, 199, 0.897);
- cursor: pointer;
- margin-left: 5px;
-}
-
-#msg_evento>strong:hover {
- text-decoration: underline;
- color: rgb(255, 255, 255);
-}
-
-.cl_atencion {
- background-color: rgb(251, 35, 35);
-}
-
-.cl_correcto {
- background-color: rgb(9, 139, 89);
-}
-
-.msg_span {
- color: red;
- padding: 5px 8px;
- box-sizing: border-box;
- text-align: center;
- display: block;
 }
