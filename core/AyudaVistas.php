@@ -4,7 +4,5 @@ class AyudaVistas{
     $urlString = "index.php?controller=".$controlador."&action=".$accion;
     return $urlString;
   }
-
-
 }
 ?>

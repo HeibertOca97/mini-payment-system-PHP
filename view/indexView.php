@@ -24,9 +24,10 @@
   </header>
   <nav class="box_menu">
     <div id="box_link">
-      <strong class="icon-gauge link" link="inicio" name="inicio"></strong>
-      <strong class="icon-users link" link="registro" name="registro"></strong>
-      <strong class="icon-list-alt link" link="pagos" name="pagos"></strong>
+      <strong class="icon-gauge link" link="inicio" name="Tablero"></strong>
+      <strong class="icon-users link" link="registro" name="Empleados"></strong>
+      <strong class="icon-list-alt link" link="pagos" name="Pagos"></strong>
+      <strong class="icon-off link" link="Salir" name="Salir"></strong>
     </div>
   </nav>
   <div id="box_fondo"></div>

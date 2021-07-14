@@ -1,5 +1,5 @@
 <?php
- class Rolpago extends ModeloBase{
+ class Rolpago extends EntidadBase{
   private $table, $id;
 
   public function __construct($table){
@@ -11,6 +11,17 @@
    $insertar = "INSERT INTO $this->table(id_emp,h_extras,aportes_iess,prestamo,ingresos,descuentos,total_pagar,fecha_emision) VALUES($id,$he,$ai,$pres,$ingre,$desc,$tt,'$fe')";
    $query = $this->db()->query($insertar);
    return $query;
+  }
+
+  public function buscarCoincidencia($column ,$value,$column2,$value2){
+    $consultar = $this->db()->query("SELECT * FROM $this->table WHERE $column = '$value' AND $column2 = '$value2'");
+
+    if($consultar->num_rows > 0){
+      return true;
+    }else {
+      return false;
+    }
+
   }
   
   public function getBys($column, $value,$column2,$value2){

@@ -1,5 +1,4 @@
 <?php
-
 class Reporte{
  private $html2pdf,$archivoDOM,$nombreReporte;
  
@@ -14,7 +13,5 @@ class Reporte{
    $this->html2pdf->writeHTML($this->archivoDOM);
   $this->html2pdf->output($this->nombreReporte.'pdf');
   }
-
-
  }
 ?>

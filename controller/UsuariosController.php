@@ -1,5 +1,4 @@
 <?php
-
 class UsuariosController extends ControladorBase{
 
  public function listar(){
@@ -12,5 +11,4 @@ class UsuariosController extends ControladorBase{
    $this->redirect('login','validacionUsuario');
   }
  }
-
 }

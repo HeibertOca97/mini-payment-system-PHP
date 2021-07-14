@@ -17,8 +17,13 @@ class ReportesController extends ControladorBase{
   if(isset($_SESSION['usuario'])){
     if(isset($_POST['id'])){
      $roles_emp = new Rolpago("rolpago");
-     $roles_emp->crear($_POST['id'],$_POST['horasExtras'],$_POST['aporte'],$_POST['prestamos'],$_POST['ingresos'],$_POST['descuentos'],$_POST['salario'],$_POST['fecha']);
-     echo "creado";
+     
+      if($roles_emp->buscarCoincidencia("id_emp",$_POST['id'],"fecha_emision",$_POST['fecha'])){
+       echo "existente";
+      }else {
+        echo "creado";
+        $roles_emp->crear($_POST['id'],$_POST['horasExtras'],$_POST['aporte'],$_POST['prestamos'],$_POST['ingresos'],$_POST['descuentos'],$_POST['salario'],$_POST['fecha']);
+      }
     }
   }
  }
@@ -45,14 +50,14 @@ class ReportesController extends ControladorBase{
  public function reporteGenerado(){
   $sesion= new Sesion();
   if(isset($_SESSION['usuario'])){
+   require "vendor/autoload.php";
+   $ruta = 'view/rolesPagoView.php';
    if(isset($_GET['id']) && isset($_GET['fecha'])){
-    require "vendor/autoload.php";
-    $ruta = 'view/reporteView.php';
     
     $roles_emp = new Rolpago("rolpago");
-    $datos=$roles_emp->getBys('id_emp',$_GET['id'],"fecha_emision",$_GET['fecha']);
+    $datos = $roles_emp->getBys('id_emp',$_GET['id'],"fecha_emision",$_GET['fecha']);
     
-    $this->view("ver",[
+    $this->view("reportes",[
      "archivo"=>$ruta,
      "datos"=>$datos
     ]);

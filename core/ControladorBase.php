@@ -26,6 +26,5 @@
       header("Location: index.php?controller=".$controlador."&action=".$accion);
     }
 
-
   }
 ?>

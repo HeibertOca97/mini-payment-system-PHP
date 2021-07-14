@@ -20,13 +20,6 @@ class LoginController extends ControladorBase{
      $this->view('login',[]);     
     }
   }
-  
-  public function cerrarSession(){
-   $session = new Sesion();
-   session_destroy();
-   session_unset();
-   $this->redirect('login','validacionUsuario');
-  }
 
 }
 ?>

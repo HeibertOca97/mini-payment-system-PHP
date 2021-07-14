@@ -5,5 +5,4 @@
   define("CONTROLADOR_DEFECTO", "Login");
   define("ACCION_DEFECTO", "validacionUsuario");
   
-  //OTRO
 ?>

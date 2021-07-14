@@ -41,33 +41,45 @@ BARRA DE OPCINES DE LA TABLA
 /***********************************
 ESTILOS DEL CONTENEDOR DE LA DESCRIPCION
 ************************************/
+#box-detalle>h3 {
+ color: rgb(0, 67, 190);
+ line-height: 3em;
+ margin-left: 5px;
+}
+
 #box-detalle>p {
  padding: 10px;
  box-sizing: border-box;
  color: rgb(192, 192, 192);
 }
 
-#box-detalle>div {
+#box-detalle>div,
+#box-detalle>div>article {
  display: flex;
  flex-wrap: wrap;
  justify-content: center;
 }
 
-#box-detalle>div>label,
-#box-detalle>div>input {
+#box-detalle>div>article>label,
+#box-detalle>div>article>input,
+#box-detalle>div>article>select {
  display: block;
  margin: 10px 5px;
  box-sizing: border-box;
 }
 
-#box-detalle>div>label {
+#box-detalle>div>article>label {
  color: #fff;
+ padding: 8px 5px;
  font-weight: bold;
  color: rgb(0, 67, 190);
+ box-sizing: border-box;
 }
 
-#box-detalle>div>input {
- padding: 5px;
+#box-detalle>div>article>input[type="number"] {
+ padding: 8px 5px;
+ max-width: 75px;
+ box-sizing: border-box;
 }
 
 /***********************************
@@ -138,8 +150,24 @@ ESTILOS TABLA EMPLEADOS
 #card-rolpagos {
  width: 95%;
  max-width: 250px;
- border: 1px solid #fff;
+ border-radius: 5px;
  padding: 5px;
  margin: 10px;
  box-sizing: border-box;
+ background-color: rgba(0, 26, 173, 0.315);
+}
+
+#card-rolpagos>p {
+ margin: 5px auto;
+ color: rgb(212, 212, 212);
+}
+
+#card-rolpagos>div>a {
+ display: block;
+ text-decoration: none;
+ text-align: center;
+ font-weight: bold;
+ line-height: 2.7em;
+ background-color: rgb(15, 61, 148);
+ color: #fff;
 }

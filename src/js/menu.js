@@ -1,84 +1,108 @@
-$( document ).ready( () => {
+$(document).ready(() => {
   //FUNION QUE MUESTRA Y OCULTA LA BARRA MENU - AL HACER CLICK EN EL BTNMENU
-  $( "#btnMenu" ).click( () => {
-    $( "#btnMenu" ).toggleClass( "true" );
+  $("#btnMenu").click(() => {
+    $("#btnMenu").toggleClass("true");
     let estilo;
 
-    if ( $( "#btnMenu" ).hasClass( "true" ) ) {
+    if ($("#btnMenu").hasClass("true")) {
       estilo = {
-        "border": "2px solid transparent",
-        "background-color": "rgb(15, 15, 15)"
+        border: "2px solid transparent",
+        "background-color": "rgb(15, 15, 15)",
       };
-      $( ".box_menu" ).fadeIn( 300 );
-      $( "#box_fondo" ).fadeIn( 300 );
+      $(".box_menu").fadeIn(300);
+      $("#box_fondo").fadeIn(300);
     } else {
       estilo = {
-        "border": "",
-        "background-color": ""
+        border: "",
+        "background-color": "",
       };
-      $( ".box_menu" ).fadeOut( 300 );
-      $( "#box_fondo" ).fadeOut( 300 );
+      $(".box_menu").fadeOut(300);
+      $("#box_fondo").fadeOut(300);
     }
 
-    $( "#btnMenu" ).css( estilo );
-  } ); 
+    $("#btnMenu").css(estilo);
+  });
   //FUNCION QUE MUESTA EL ENUNCIADO DE CADA MENU
-  for ( let i = 0; i < $( ".link" ).length; i++ ) {
-    $( ".link" ).eq( i ).on( {
-      mouseenter: e => {
-        $( ".link" ).eq( i ).html( "<p>" + e.target.getAttribute( "name" ) + "</p>" );
-      },
-      mouseleave: e => {
-        $( ".link" ).eq( i ).html( "" );
-      },
-      click:()=>{
-       render($( ".link" ).eq( i ).attr("name"));
-      }
-    } ); 
+  for (let i = 0; i < $(".link").length; i++) {
+    $(".link")
+      .eq(i)
+      .on({
+        mouseenter: (e) => {
+          $(".link")
+            .eq(i)
+            .html("<p>" + e.target.getAttribute("name") + "</p>");
+        },
+        mouseleave: (e) => {
+          $(".link").eq(i).html("");
+        },
+        click: () => {
+          render($(".link").eq(i).attr("link"));
+          indexVistaMenu(i);
+        },
+      });
   }
+  indicadorDeVista();
+});
 
-
-} );
-
-function render(vista){
- switch (vista) {
-  case "inicio":
-   location.href = "index.php?controller=Sesiones&action=index";
-  break;
-  case "registro":
-    location.href = "index.php?controller=Empleados&action=ver";
-  break;
-  case "pagos":
-    location.href = "index.php?controller=Reportes&action=ver";
-  break;
-  default:
-  break;
- }
+function indexVistaMenu(i) {
+  localStorage.setItem("index", i);
 }
 
-function toggleMensaje( el, msg ){
+function indicadorDeVista() {
+  var vistas = localStorage.getItem("vista"),
+    indice = localStorage.getItem("index");
+  if (vistas == "registro") {
+    $(".link").eq(indice).css("background", "#000");
+  } else if (vistas == "pagos") {
+    $(".link").eq(indice).css("background", "#000");
+  } else if (vistas == "inicio") {
+    $(".link").eq(indice).css("background", "#000");
+  }
+}
+
+function render(vista) {
+  localStorage.setItem("vista", vista);
+  switch (vista) {
+    case "inicio":
+      location.href = "index.php?controller=Sesiones&action=index";
+      break;
+    case "registro":
+      location.href = "index.php?controller=Empleados&action=ver";
+      break;
+    case "pagos":
+      location.href = "index.php?controller=Reportes&action=ver";
+      break;
+    default:
+      localStorage.removeItem("vista");
+      localStorage.removeItem("index");
+      location.href = "index.php?controller=Sesiones&action=Logout";
+      break;
+  }
+}
+
+function toggleMensaje(el, msg) {
   const icono = `<span class="${el}"></span> ${msg} <strong id="deshacer">Deshacer</strong>`;
   return icono;
 }
 
-function removerMensaje(){
- setTimeout( () => {
-  $( '#msg_evento' ).slideUp( '300' );
-  $( '#msg_evento' ).html( '' );
-  $( '#msg_evento' ).addClass( '' );
-  $( '#msg_evento' ).removeClass( 'cl_correcto' );
-  $( '#msg_evento' ).removeClass( 'cl_atencion' );
- }, 5000 );
- $( '#deshacer' ).click( () => {
-  $( '#msg_evento' ).slideUp( '300' );
-  $( '#msg_evento' ).html( '' );
-  $( '#msg_evento' ).addClass( '' );
-  $( '#msg_evento' ).removeClass( 'cl_correcto' );
-  $( '#msg_evento' ).removeClass( 'cl_atencion' );
- } );
+function removerMensaje() {
+  setTimeout(() => {
+    $("#msg_evento").slideUp("300");
+    $("#msg_evento").html("");
+    $("#msg_evento").addClass("");
+    $("#msg_evento").removeClass("cl_correcto");
+    $("#msg_evento").removeClass("cl_atencion");
+  }, 5000);
+  $("#deshacer").click(() => {
+    $("#msg_evento").slideUp("300");
+    $("#msg_evento").html("");
+    $("#msg_evento").addClass("");
+    $("#msg_evento").removeClass("cl_correcto");
+    $("#msg_evento").removeClass("cl_atencion");
+  });
 }
 
-var regresarAtraz = ()=>{
- const url = ()=> render("inicio");
- $(".btnInicio").click(url);
-}
+var regresarAtraz = () => {
+  const url = () => render("inicio");
+  $(".btnInicio").click(url);
+};
